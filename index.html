@@ -341,18 +341,52 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-40 px-6">
-        <div class="max-w-3xl mx-auto text-center fade-in">
-            <h2 class="section-title text-4xl md:text-6xl mb-8">
-                당신의 AI 노동력,
+    <!-- CTA / 문의 Section -->
+    <section id="contact" class="py-40 px-6">
+        <div class="max-w-2xl mx-auto fade-in">
+            <h2 class="section-title text-4xl md:text-6xl mb-4 text-center">
+                무료 진단 신청
             </h2>
-            <h2 class="section-title text-4xl md:text-6xl mb-12">
-                지금 시작하세요
-            </h2>
-            <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="btn-primary inline-block">
-                GitHub에서 시작하기
-            </a>
+            <p class="text-gray-500 text-center mb-12">
+                AI 에이전트가 어떤 업무를 대신할 수 있는지, 무료로 분석해드립니다.
+            </p>
+            <form action="https://formspree.io/f/mupengi98@gmail.com" method="POST" class="space-y-6" id="contact-form">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">이름 / 회사명</label>
+                    <input type="text" name="name" required placeholder="홍길동 / 홍길동컴퍼니" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base" />
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">연락처 (이메일 또는 전화번호)</label>
+                    <input type="text" name="contact" required placeholder="hello@company.com / 010-1234-5678" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base" />
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">업종</label>
+                    <select name="industry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base bg-white">
+                        <option value="">선택해주세요</option>
+                        <option value="ecommerce">이커머스 / 쇼핑몰</option>
+                        <option value="fnb">요식업 / 카페</option>
+                        <option value="beauty">뷰티 / 미용실</option>
+                        <option value="clinic">병원 / 클리닉</option>
+                        <option value="studio">스튜디오 / 포토부스</option>
+                        <option value="media">미디어 / 방송</option>
+                        <option value="startup">스타트업 / IT</option>
+                        <option value="other">기타</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">어떤 업무를 자동화하고 싶으신가요?</label>
+                    <textarea name="message" rows="4" placeholder="예: 고객 문의 응대가 너무 많아요 / 리뷰 관리를 자동화하고 싶어요 / 매출 리포트를 매일 받고 싶어요" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base resize-none"></textarea>
+                </div>
+                <input type="text" name="_gotcha" style="display:none" />
+                <button type="submit" class="btn-primary w-full text-center block">
+                    무료 진단 신청하기 →
+                </button>
+                <p class="text-xs text-gray-400 text-center">24시간 내 무펭이가 직접 답변드립니다 🐧</p>
+            </form>
+            <div id="form-success" class="hidden text-center py-12">
+                <p class="text-2xl font-bold mb-2">🐧 신청 완료!</p>
+                <p class="text-gray-500">24시간 내 연락드리겠습니다.</p>
+            </div>
         </div>
     </section>
 
@@ -394,6 +428,26 @@
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
+
+        // Form submission
+        const form = document.getElementById('contact-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button[type="submit"]');
+                btn.textContent = '전송 중...';
+                btn.disabled = true;
+                try {
+                    await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    form.classList.add('hidden');
+                    document.getElementById('form-success').classList.remove('hidden');
+                } catch {
+                    btn.textContent = '무료 진단 신청하기 →';
+                    btn.disabled = false;
+                    alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+                }
+            });
+        }
     </script>
 
 </body>
