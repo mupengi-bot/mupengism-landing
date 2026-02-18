@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무펭이즘 — AI 노동력의 시대</title>
+    
+    <!-- Pretendard 가변폰트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        * {
+            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        /* 커서 디테일 */
+        a, button {
+            cursor: pointer;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        a:hover, button:hover {
+            opacity: 0.7;
+        }
+        
+        /* 스크롤바 디테일 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #000000;
+            border-radius: 4px;
+        }
+        
+        /* 섹션 애니메이션 */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 타이포그래피 디테일 */
+        .hero-title {
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+        
+        .section-title {
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        .body-text {
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+        
+        /* 숫자 강조 */
+        .big-number {
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+        
+        /* 미니멀 카드 */
+        .card {
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            border-color: #000000;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* 펭귄 이모지 subtle 처리 */
+        .penguin {
+            opacity: 0.3;
+            font-size: 2rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 버튼 */
+        .btn-primary {
+            background: #000000;
+            color: #ffffff;
+            padding: 1.125rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            border: 2px solid #000000;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background: #ffffff;
+            color: #000000;
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-6 relative">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="penguin mb-8">🐧</div>
+            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl mb-6">
+                SaaS의 종말,
+            </h1>
+            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl mb-12">
+                AI 노동력의 시대
+            </h1>
+            <p class="body-text text-xl md:text-2xl text-gray-800 max-w-2xl mx-auto mb-12 font-medium">
+                소프트웨어 대신,<br class="md:hidden">
+                AI를 고용하세요
+            </p>
+            <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="btn-primary inline-block">
+                지금 시작하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="py-40 md:py-48 px-6 bg-black text-white">
+        <div class="max-w-4xl mx-auto space-y-20 md:space-y-28">
+            <div class="fade-in">
+                <p class="section-title text-3xl md:text-5xl">
+                    소프트웨어를 팔던<br>시대는 끝났다
+                </p>
+            </div>
+            <div class="fade-in">
+                <p class="section-title text-3xl md:text-5xl">
+                    사람들이 원하는 것은<br>결과물이다
+                </p>
+            </div>
+            <div class="fade-in">
+                <p class="section-title text-3xl md:text-5xl">
+                    AI가 일하고,<br>당신은 결과를 얻는다
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before/After Section -->
+    <section class="py-40 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-4xl md:text-6xl text-center mb-24 fade-in">
+                패러다임의 전환
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Before: SaaS -->
+                <div class="card p-10 md:p-14 rounded-3xl fade-in">
+                    <div class="text-xs font-bold text-gray-400 tracking-wider mb-6">BEFORE</div>
+                    <h3 class="text-4xl md:text-5xl font-black mb-8">SaaS</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">$99</div>
+                            <p class="body-text text-gray-600">월 구독료</p>
+                        </div>
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">3시간</div>
+                            <p class="body-text text-gray-600">학습 시간</p>
+                        </div>
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">∞</div>
+                            <p class="body-text text-gray-600">반복 작업</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- After: AIaaS -->
+                <div class="card p-10 md:p-14 rounded-3xl fade-in bg-black text-white border-black">
+                    <div class="text-xs font-bold text-gray-400 tracking-wider mb-6">AFTER</div>
+                    <h3 class="text-4xl md:text-5xl font-black mb-8">AIaaS</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-white mb-2">시간당</div>
+                            <p class="body-text text-gray-300">필요한 만큼만 결제</p>
+                        </div>
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-white mb-2">0분</div>
+                            <p class="body-text text-gray-300">말로 지시하면 끝</p>
+                        </div>
+                        <div>
+                            <div class="big-number text-5xl md:text-6xl text-white mb-2">24/7</div>
+                            <p class="body-text text-gray-300">자동으로 계속 작동</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OpenClaw Features Section -->
+    <section class="py-40 px-6 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-4xl md:text-6xl text-center mb-32 fade-in">
+                OpenClaw
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 md:gap-20">
+                <div class="fade-in">
+                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">01</div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">자연어로 지시</h3>
+                    <p class="body-text text-gray-700 text-lg">
+                        말로 설명하면 AI가 이해하고 실행합니다.
+                    </p>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">02</div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">80+ 스킬 생태계</h3>
+                    <p class="body-text text-gray-700 text-lg">
+                        이메일, 블로그, 인스타그램부터 음성합성까지.
+                    </p>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">03</div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Discord 통합</h3>
+                    <p class="body-text text-gray-700 text-lg">
+                        메시지만으로 작업 지시하고 결과를 받습니다.
+                    </p>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">04</div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">24/7 자동화</h3>
+                    <p class="body-text text-gray-700 text-lg">
+                        AI가 계속 일합니다. 잠자는 동안에도.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section class="py-40 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="fade-in mb-20">
+                <div class="big-number text-7xl md:text-9xl mb-6 text-gray-800">80+</div>
+                <h2 class="section-title text-3xl md:text-5xl">
+                    스킬 생태계
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 fade-in">
+                <div class="card p-6 md:p-8 rounded-2xl">
+                    <p class="font-bold text-base md:text-lg mb-2">메시징</p>
+                    <p class="text-xs md:text-sm text-gray-600">Discord, Telegram</p>
+                </div>
+                <div class="card p-6 md:p-8 rounded-2xl">
+                    <p class="font-bold text-base md:text-lg mb-2">SNS</p>
+                    <p class="text-xs md:text-sm text-gray-600">Instagram, Twitter</p>
+                </div>
+                <div class="card p-6 md:p-8 rounded-2xl">
+                    <p class="font-bold text-base md:text-lg mb-2">미디어</p>
+                    <p class="text-xs md:text-sm text-gray-600">이미지, 음성, 카메라</p>
+                </div>
+                <div class="card p-6 md:p-8 rounded-2xl">
+                    <p class="font-bold text-base md:text-lg mb-2">개발</p>
+                    <p class="text-xs md:text-sm text-gray-600">Git, Shell, 파일</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Case: MUFI -->
+    <section class="py-40 px-6 bg-black text-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in mb-20">
+                <div class="text-xs font-bold text-gray-500 tracking-wider mb-6">CASE STUDY</div>
+                <h2 class="section-title text-4xl md:text-6xl mb-12">
+                    MUFI 포토부스
+                </h2>
+                <p class="body-text text-gray-400 text-lg md:text-xl max-w-2xl">
+                    대학 축제 홍보, 매일 3시간 → 메시지 하나로 끝
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 fade-in">
+                <div>
+                    <div class="big-number text-5xl md:text-6xl text-gray-600 mb-4">3시간</div>
+                    <p class="body-text text-gray-400">사람이 직접 할 때</p>
+                </div>
+                
+                <div>
+                    <div class="big-number text-5xl md:text-6xl text-white mb-4">→</div>
+                    <p class="body-text text-gray-400">OpenClaw 도입</p>
+                </div>
+                
+                <div>
+                    <div class="big-number text-5xl md:text-6xl text-white mb-4">5분</div>
+                    <p class="body-text text-gray-300 font-semibold">95% 시간 절감</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 fade-in">
+                <p class="body-text text-gray-400 text-base md:text-lg">
+                    이미지 생성, 카드뉴스 제작, 인스타그램·블로그·트위터 업로드까지<br class="hidden md:block">
+                    Discord 메시지 하나로 모든 채널에 자동 배포
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-40 px-6">
+        <div class="max-w-3xl mx-auto text-center fade-in">
+            <h2 class="section-title text-4xl md:text-6xl mb-8">
+                당신의 AI 노동력,
+            </h2>
+            <h2 class="section-title text-4xl md:text-6xl mb-12">
+                지금 시작하세요
+            </h2>
+            <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="btn-primary inline-block">
+                GitHub에서 시작하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 border-t border-gray-200 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <p class="text-2xl font-black">무펭이즘</p>
+                    <p class="text-sm text-gray-500 mt-2">AI 노동력의 시대</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="text-sm text-gray-600 hover:text-black transition">
+                        GitHub
+                    </a>
+                    <p class="text-xs text-gray-400 mt-2">© 2026 무펭이즘</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Intersection Observer Script -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>

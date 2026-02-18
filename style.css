@@ -1,0 +1,306 @@
+/* Custom Styles for 무펭이즘 Landing Page */
+
+/* ========== Base & Typography ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
+    position: relative;
+}
+
+/* ========== Gradient Text ========== */
+.gradient-text {
+    background: linear-gradient(135deg, #fff 0%, #4FC3F7 50%, #7C4DFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-alt {
+    background: linear-gradient(135deg, #7C4DFF 0%, #4FC3F7 50%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ========== Backgrounds ========== */
+.grid-background {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(79, 195, 247, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 195, 247, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.hero-gradient {
+    background: radial-gradient(ellipse at top, rgba(79, 195, 247, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom, rgba(124, 77, 255, 0.15) 0%, transparent 60%);
+}
+
+.cta-gradient {
+    background: radial-gradient(ellipse at center, rgba(79, 195, 247, 0.15) 0%, transparent 70%);
+}
+
+/* ========== Glass Cards ========== */
+.glass-card {
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    background: rgba(17, 17, 17, 0.8);
+    border-color: rgba(79, 195, 247, 0.3);
+    transform: translateY(-4px);
+}
+
+.glass-card-glow {
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    box-shadow: 0 0 30px rgba(79, 195, 247, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-glow:hover {
+    background: rgba(17, 17, 17, 0.8);
+    border-color: rgba(79, 195, 247, 0.5);
+    box-shadow: 0 0 50px rgba(79, 195, 247, 0.3);
+    transform: translateY(-6px);
+}
+
+/* ========== Buttons ========== */
+.btn-primary {
+    background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 100%);
+    color: #000;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(79, 195, 247, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(79, 195, 247, 0.5);
+    background: linear-gradient(135deg, #29B6F6 0%, #4FC3F7 100%);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #4FC3F7;
+    border: 2px solid #4FC3F7;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(79, 195, 247, 0.1);
+    border-color: #29B6F6;
+    color: #29B6F6;
+    transform: translateY(-2px);
+}
+
+.btn-primary-large {
+    background: linear-gradient(135deg, #4FC3F7 0%, #7C4DFF 100%);
+    color: #fff;
+    font-weight: 800;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(79, 195, 247, 0.4);
+}
+
+.btn-primary-large:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 60px rgba(79, 195, 247, 0.6);
+}
+
+.btn-secondary-large {
+    background: transparent;
+    color: #fff;
+    border: 3px solid #4FC3F7;
+    font-weight: 800;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary-large:hover {
+    background: linear-gradient(135deg, #4FC3F7 0%, #7C4DFF 100%);
+    border-color: transparent;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 60px rgba(124, 77, 255, 0.5);
+}
+
+/* ========== Skill Tags ========== */
+.skill-tag {
+    padding: 0.75rem 1.5rem;
+    background: rgba(17, 17, 17, 0.8);
+    border: 2px solid rgba(79, 195, 247, 0.3);
+    border-radius: 2rem;
+    color: #4FC3F7;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: default;
+    backdrop-filter: blur(10px);
+}
+
+.skill-tag:hover {
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.2) 0%, rgba(124, 77, 255, 0.2) 100%);
+    border-color: #4FC3F7;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 20px rgba(79, 195, 247, 0.3);
+}
+
+/* ========== Animations ========== */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.icon-float {
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+.hover-lift {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+}
+
+/* ========== Fade In Animations ========== */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== Scroll Reveal (JavaScript will add this class) ========== */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========== Counter Animation ========== */
+.counter {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .grid-background {
+        background-size: 30px 30px;
+    }
+    
+    @keyframes gridMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(30px, 30px); }
+    }
+    
+    .glass-card,
+    .glass-card-glow {
+        padding: 1.5rem;
+    }
+    
+    .skill-tag {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ========== Smooth Scrolling ========== */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* ========== Selection ========== */
+::selection {
+    background-color: rgba(79, 195, 247, 0.3);
+    color: #fff;
+}
+
+::-moz-selection {
+    background-color: rgba(79, 195, 247, 0.3);
+    color: #fff;
+}
+
+/* ========== Custom Scrollbar ========== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4FC3F7 0%, #7C4DFF 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #29B6F6 0%, #6A3FE8 100%);
+}
