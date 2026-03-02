@@ -1,454 +1,587 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>무펭이즘 — AI 노동력의 시대</title>
-    
-    <!-- Pretendard 가변폰트 -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        * {
-            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-        }
-        
-        body {
-            overflow-x: hidden;
-            background: #ffffff;
-            color: #000000;
-        }
-        
-        /* 커서 디테일 */
-        a, button {
-            cursor: pointer;
-            transition: opacity 0.3s ease-out;
-        }
-        
-        a:hover, button:hover {
-            opacity: 0.7;
-        }
-        
-        /* 스크롤바 디테일 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f5f5f5;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #000000;
-            border-radius: 4px;
-        }
-        
-        /* 섹션 애니메이션 */
-        .fade-in {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* 타이포그래피 디테일 */
-        .hero-title {
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-        }
-        
-        .section-title {
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-        
-        .body-text {
-            font-weight: 400;
-            line-height: 1.6;
-            letter-spacing: -0.01em;
-        }
-        
-        /* 숫자 강조 */
-        .big-number {
-            font-weight: 900;
-            font-variant-numeric: tabular-nums;
-            letter-spacing: -0.04em;
-            line-height: 1;
-        }
-        
-        /* 미니멀 카드 */
-        .card {
-            background: #fafafa;
-            border: 1px solid #e5e5e5;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card:hover {
-            border-color: #000000;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        }
-        
-        /* 펭귄 이모지 subtle 처리 */
-        .penguin {
-            opacity: 0.3;
-            font-size: 2rem;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* 버튼 */
-        .btn-primary {
-            background: #000000;
-            color: #ffffff;
-            padding: 1.125rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            border: 2px solid #000000;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary:hover {
-            background: #ffffff;
-            color: #000000;
-            opacity: 1;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무펭이즘 — AI 업무 자동화 관리 서비스</title>
+<meta name="description" content="반복 업무를 AI로 자동화합니다. 설치부터 관리까지, 기술 지식 필요 없습니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--navy:#0F2B4C;--navy-deep:#091D33;--navy-mid:#163756;
+--cyan:#2E7DAF;--cyan-light:#3A9BD5;--cyan-muted:#1E5A80;
+--white:#FFFFFF;--off-white:#F4F6F8;--gray-100:#E8ECF0;
+--gray-200:#D0D6DC;--gray-400:#8A95A0;--gray-500:#6B7785;
+--gray-600:#4A5568;--text-primary:#1A2332;--text-secondary:#4A5568;
+--font-kr:'Pretendard',system-ui,-apple-system,sans-serif;
+--font-en:'Space Grotesk','Pretendard',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-kr);color:var(--text-primary);background:var(--white);
+-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:100;
+padding:20px 48px;display:flex;align-items:center;justify-content:space-between;
+transition:background .3s,box-shadow .3s,padding .3s}
+.nav.scrolled{background:rgba(15,43,76,.97);box-shadow:0 1px 0 rgba(255,255,255,.06);padding:14px 48px}
+.nav-logo{font-family:var(--font-en);font-weight:700;font-size:18px;color:var(--white);letter-spacing:-.02em}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:rgba(255,255,255,.7);font-size:14px;font-weight:500;transition:color .2s;letter-spacing:-.01em}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--cyan);color:var(--white)!important;padding:10px 24px;
+border-radius:4px;font-weight:600;font-size:14px;transition:background .2s}
+.nav-cta:hover{background:var(--cyan-light)}
+.nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-mobile-toggle span{display:block;width:20px;height:2px;background:var(--white);margin:5px 0;transition:.3s}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy-deep);display:flex;align-items:center;
+position:relative;overflow:hidden;padding:120px 48px 80px}
+.hero::before{content:'';position:absolute;inset:0;
+background-image:
+  linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:60px 60px;
+}
+.hero::after{content:'';position:absolute;inset:0;
+background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(46,125,175,.08),transparent)}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:1}
+.hero-label{font-size:13px;font-weight:600;color:var(--cyan);letter-spacing:.08em;
+text-transform:uppercase;margin-bottom:28px;font-family:var(--font-en)}
+.hero h1{font-size:clamp(36px,5.5vw,64px);font-weight:800;color:var(--white);
+line-height:1.15;letter-spacing:-.03em;margin-bottom:24px;max-width:700px}
+.hero-sub{font-size:clamp(16px,1.8vw,20px);color:rgba(255,255,255,.55);
+line-height:1.7;max-width:480px;margin-bottom:48px;font-weight:400}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;
+background:var(--cyan);color:var(--white);padding:16px 36px;
+font-size:16px;font-weight:600;border-radius:4px;border:none;cursor:pointer;
+transition:background .2s,transform .15s;font-family:var(--font-kr)}
+.btn-primary:hover{background:var(--cyan-light);transform:translateY(-1px)}
+.btn-primary svg{width:16px;height:16px;transition:transform .2s}
+.btn-primary:hover svg{transform:translateX(3px)}
+.hero-metric{position:absolute;right:0;bottom:80px;text-align:right}
+.hero-metric-num{font-family:var(--font-en);font-size:clamp(48px,8vw,96px);
+font-weight:700;color:rgba(255,255,255,.06);line-height:1;letter-spacing:-.04em}
+
+/* SECTIONS */
+section{padding:120px 48px}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:.1em;
+text-transform:uppercase;margin-bottom:16px;font-family:var(--font-en)}
+.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;
+line-height:1.2;letter-spacing:-.025em;margin-bottom:20px}
+.section-desc{font-size:17px;color:var(--gray-500);line-height:1.75;max-width:560px}
+
+/* PROBLEM */
+.problem{background:var(--off-white)}
+.problem-stat{margin:56px 0 48px}
+.problem-stat-num{font-family:var(--font-en);font-size:clamp(56px,8vw,100px);
+font-weight:700;color:var(--navy);letter-spacing:-.04em;line-height:1}
+.problem-stat-unit{font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--navy)}
+.problem-stat-label{font-size:17px;color:var(--gray-500);margin-top:12px}
+.problem-barriers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+margin-top:64px;background:var(--gray-200);border:1px solid var(--gray-200)}
+.barrier{background:var(--off-white);padding:40px 32px}
+.barrier-num{font-family:var(--font-en);font-size:13px;font-weight:600;
+color:var(--cyan);margin-bottom:16px}
+.barrier h3{font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em}
+.barrier p{font-size:15px;color:var(--gray-500);line-height:1.65}
+.problem-source{font-size:13px;color:var(--gray-400);margin-top:32px}
+
+/* SERVICE */
+.service{background:var(--navy-deep);color:var(--white)}
+.service .section-title{color:var(--white)}
+.service .section-desc{color:rgba(255,255,255,.5)}
+.service-headline{font-size:clamp(20px,2.5vw,28px);font-weight:600;
+color:rgba(255,255,255,.85);margin-bottom:64px;max-width:600px;line-height:1.5;letter-spacing:-.02em}
+.service-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.service-steps::before{content:'';position:absolute;top:28px;left:calc(12.5% + 16px);
+right:calc(12.5% + 16px);height:1px;background:var(--cyan-muted)}
+.step{text-align:center;padding:0 24px;position:relative}
+.step-num{width:56px;height:56px;border:2px solid var(--cyan-muted);
+border-radius:50%;display:flex;align-items:center;justify-content:center;
+font-family:var(--font-en);font-size:18px;font-weight:600;color:var(--cyan);
+margin:0 auto 24px;background:var(--navy-deep);position:relative;z-index:1;
+transition:border-color .3s,color .3s}
+.step:hover .step-num{border-color:var(--cyan);color:var(--white);background:var(--cyan-muted)}
+.step h3{font-size:17px;font-weight:700;margin-bottom:8px;color:rgba(255,255,255,.9)}
+.step p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.6}
+
+/* CASES */
+.cases{background:var(--white)}
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px}
+.case{border:1px solid var(--gray-100);padding:48px;position:relative;transition:border-color .3s}
+.case:hover{border-color:var(--cyan)}
+.case-tag{font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:.08em;
+text-transform:uppercase;font-family:var(--font-en);margin-bottom:20px}
+.case-company{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-.02em}
+.case-industry{font-size:14px;color:var(--gray-400);margin-bottom:28px}
+.case-metrics{display:flex;gap:32px;margin-bottom:28px}
+.case-metric{}
+.case-metric-val{font-family:var(--font-en);font-size:28px;font-weight:700;
+color:var(--navy);letter-spacing:-.02em}
+.case-metric-label{font-size:13px;color:var(--gray-400);margin-top:4px}
+.case-quote{font-size:15px;color:var(--gray-600);line-height:1.7;
+border-left:2px solid var(--cyan);padding-left:20px;font-style:italic}
+.cases-retention{text-align:center;margin-top:64px;padding:48px;border:1px solid var(--gray-100)}
+.cases-retention-num{font-family:var(--font-en);font-size:clamp(48px,6vw,72px);
+font-weight:700;color:var(--navy);letter-spacing:-.04em}
+.cases-retention-label{font-size:17px;color:var(--gray-500);margin-top:8px}
+
+/* DIFFERENTIATOR */
+.diff{background:var(--off-white)}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:64px}
+.diff-col{}
+.diff-col-label{font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:.1em;
+text-transform:uppercase;font-family:var(--font-en);margin-bottom:24px;
+padding-bottom:16px;border-bottom:1px solid var(--gray-200)}
+.diff-item{margin-bottom:24px}
+.diff-item h4{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.diff-item p{font-size:14px;color:var(--gray-500);line-height:1.6}
+.diff-item .highlight{font-family:var(--font-en);font-weight:600;color:var(--cyan)}
+
+.compare{margin-top:80px}
+.compare h3{font-size:22px;font-weight:700;margin-bottom:32px;letter-spacing:-.02em}
+.compare-table{width:100%;border-collapse:collapse}
+.compare-table th,.compare-table td{text-align:left;padding:16px 20px;font-size:15px}
+.compare-table thead th{font-size:13px;font-weight:600;color:var(--gray-400);
+letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid var(--gray-200);font-family:var(--font-en)}
+.compare-table tbody td{border-bottom:1px solid var(--gray-100);color:var(--gray-600)}
+.compare-table tbody tr:last-child td{border-bottom:none}
+.compare-table tbody td:first-child{font-weight:600;color:var(--text-primary)}
+.compare-table tbody td:last-child{color:var(--navy);font-weight:600}
+.compare-table .mup-col{background:rgba(46,125,175,.04)}
+
+/* PRICING */
+.pricing{background:var(--white)}
+.pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px;max-width:800px}
+.pricing-card{border:1px solid var(--gray-100);padding:48px 40px}
+.pricing-card.featured{border-color:var(--cyan);position:relative}
+.pricing-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cyan)}
+.pricing-card-name{font-size:13px;font-weight:600;color:var(--cyan);letter-spacing:.08em;
+text-transform:uppercase;font-family:var(--font-en);margin-bottom:20px}
+.pricing-card-price{font-size:36px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
+.pricing-card-price span{font-size:16px;font-weight:400;color:var(--gray-400)}
+.pricing-card-desc{font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:28px}
+.pricing-card-features{list-style:none}
+.pricing-card-features li{font-size:14px;color:var(--gray-600);padding:8px 0;
+padding-left:20px;position:relative}
+.pricing-card-features li::before{content:'';position:absolute;left:0;top:15px;
+width:8px;height:1px;background:var(--cyan)}
+.pricing-note{margin-top:40px;font-size:16px;color:var(--gray-500);
+padding:24px 0;border-top:1px solid var(--gray-100)}
+
+/* TEAM */
+.team{background:var(--navy-deep);color:var(--white)}
+.team .section-title{color:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+margin-top:64px;background:rgba(255,255,255,.08)}
+.team-member{background:var(--navy-deep);padding:48px 36px}
+.team-member-role{font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:.08em;
+text-transform:uppercase;font-family:var(--font-en);margin-bottom:16px}
+.team-member-name{font-size:24px;font-weight:700;margin-bottom:20px;letter-spacing:-.02em}
+.team-member-detail{font-size:14px;color:rgba(255,255,255,.45);line-height:1.7}
+.team-member-detail strong{color:rgba(255,255,255,.75);font-weight:600}
+
+/* FOOTER CTA */
+.footer-cta{background:var(--navy);padding:100px 48px;text-align:center}
+.footer-cta h2{font-size:clamp(28px,3.5vw,40px);font-weight:800;color:var(--white);
+letter-spacing:-.025em;margin-bottom:16px}
+.footer-cta p{font-size:17px;color:rgba(255,255,255,.5);margin-bottom:48px}
+.footer-cta .btn-primary{font-size:17px;padding:18px 44px}
+.footer-contact{display:flex;justify-content:center;gap:48px;margin-top:48px}
+.footer-contact a{font-size:14px;color:rgba(255,255,255,.4);transition:color .2s}
+.footer-contact a:hover{color:var(--white)}
+.footer-bottom{text-align:center;padding:24px 48px;background:var(--navy-deep);
+font-size:13px;color:rgba(255,255,255,.25)}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav{padding:16px 24px}
+  .nav.scrolled{padding:12px 24px}
+  .nav-links{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;
+  background:var(--navy-deep);flex-direction:column;justify-content:center;align-items:center;gap:28px;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:18px;color:rgba(255,255,255,.8)}
+  .nav-mobile-toggle{display:block;z-index:101}
+  
+  section{padding:80px 24px}
+  .hero{padding:100px 24px 60px}
+  .hero-metric{display:none}
+  
+  .problem-barriers{grid-template-columns:1fr}
+  .service-steps{grid-template-columns:1fr 1fr;gap:32px}
+  .service-steps::before{display:none}
+  .cases-grid{grid-template-columns:1fr;gap:32px}
+  .case{padding:32px 24px}
+  .case-metrics{flex-direction:column;gap:16px}
+  .diff-grid{grid-template-columns:1fr;gap:40px}
+  .compare-table{font-size:13px}
+  .compare-table th,.compare-table td{padding:12px 10px}
+  .pricing-cards{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .footer-contact{flex-direction:column;gap:16px;align-items:center}
+}
+@media(max-width:480px){
+  .step{padding:0 12px}
+  .service-steps{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 relative">
-        <div class="max-w-5xl mx-auto text-center">
-            <div class="penguin mb-8">🐧</div>
-            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl mb-6">
-                SaaS의 종말,
-            </h1>
-            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl mb-12">
-                AI 노동력의 시대
-            </h1>
-            <p class="body-text text-xl md:text-2xl text-gray-800 max-w-2xl mx-auto mb-12 font-medium">
-                소프트웨어 대신,<br class="md:hidden">
-                AI를 고용하세요
-            </p>
-            <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="btn-primary inline-block">
-                지금 시작하기
-            </a>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">mupeng<span>ism</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="#problem">문제</a>
+    <a href="#service">서비스</a>
+    <a href="#cases">성과</a>
+    <a href="#pricing">가격</a>
+    <a href="#team">팀</a>
+    <a href="mailto:muinfilm@naver.com" class="nav-cta">무료 컨설팅</a>
+  </div>
+  <button class="nav-mobile-toggle" id="navToggle" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-label reveal">AI Managed Service</div>
+    <h1 class="reveal reveal-delay-1">반복 업무를<br>AI로 자동화합니다</h1>
+    <p class="hero-sub reveal reveal-delay-2">설치부터 관리까지. 기술 지식 필요 없습니다.</p>
+    <a href="mailto:muinfilm@naver.com" class="btn-primary reveal reveal-delay-3">
+      30분 무료 컨설팅
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </a>
+    <div class="hero-metric">
+      <div class="hero-metric-num">4,270,000+</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-inner">
+    <div class="section-label reveal">The Problem</div>
+    <h2 class="section-title reveal">대부분의 기업은<br>AI를 도입하지 못하고 있습니다</h2>
+    <div class="problem-stat reveal">
+      <span class="problem-stat-num" data-count="94.7">0</span><span class="problem-stat-unit">%</span>
+      <p class="problem-stat-label">중소기업 AI 미도입 비율</p>
+    </div>
+    <div class="problem-barriers">
+      <div class="barrier reveal">
+        <div class="barrier-num">01</div>
+        <h3>비용 부담</h3>
+        <p>전문 인력 채용, 인프라 구축, 솔루션 라이선스 비용이 중소기업에겐 과도합니다.</p>
+      </div>
+      <div class="barrier reveal reveal-delay-1">
+        <div class="barrier-num">02</div>
+        <h3>전문인력 부재</h3>
+        <p>AI를 설계하고 운영할 내부 인력이 없어 시작조차 어렵습니다.</p>
+      </div>
+      <div class="barrier reveal reveal-delay-2">
+        <div class="barrier-num">03</div>
+        <h3>인식 부족</h3>
+        <p>어디서부터 시작해야 하는지, 무엇이 가능한지 정보 자체가 부족합니다.</p>
+      </div>
+    </div>
+    <p class="problem-source reveal">출처: 중소기업중앙회 (2024), 대한상공회의소 (2025)</p>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="service" id="service">
+  <div class="section-inner">
+    <div class="section-label reveal">How It Works</div>
+    <h2 class="section-title reveal">코웨이가 정수기를 관리하듯,<br>AI를 관리합니다</h2>
+    <p class="service-headline reveal">도입부터 운영까지 전 과정을 맡깁니다.<br>귀사는 본업에 집중하세요.</p>
+    <div class="service-steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>업무 분석</h3>
+        <p>자동화 가능한 반복 업무를 식별하고 우선순위를 정합니다</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">2</div>
+        <h3>설계 / 배치</h3>
+        <p>맞춤형 AI 에이전트를 설계하고 업무 환경에 배치합니다</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">3</div>
+        <h3>교육</h3>
+        <p>실무자가 바로 사용할 수 있도록 실습 중심으로 교육합니다</p>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">4</div>
+        <h3>월간 관리</h3>
+        <p>성능 모니터링, 업데이트, 장애 대응을 지속적으로 수행합니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="section-inner">
+    <div class="section-label reveal">Case Studies</div>
+    <h2 class="section-title reveal">검증된 성과</h2>
+    <p class="section-desc reveal">실제 고객사에서 측정된 결과입니다.</p>
+    <div class="cases-grid">
+      <div class="case reveal">
+        <div class="case-tag">Case 01</div>
+        <h3 class="case-company">포네이처스</h3>
+        <p class="case-industry">IoT / 하드웨어 스타트업</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-val">300<span style="font-size:16px;color:var(--gray-400)">건</span></div>
+            <div class="case-metric-label">VC 메일 자동 처리</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val">15min <span style="font-size:16px;color:var(--gray-400);font-weight:400">→</span> 2min</div>
+            <div class="case-metric-label">건당 처리 시간</div>
+          </div>
         </div>
-    </section>
-
-    <!-- Vision Section -->
-    <section class="py-40 md:py-48 px-6 bg-black text-white">
-        <div class="max-w-4xl mx-auto space-y-20 md:space-y-28">
-            <div class="fade-in">
-                <p class="section-title text-3xl md:text-5xl">
-                    소프트웨어를 팔던<br>시대는 끝났다
-                </p>
-            </div>
-            <div class="fade-in">
-                <p class="section-title text-3xl md:text-5xl">
-                    사람들이 원하는 것은<br>결과물이다
-                </p>
-            </div>
-            <div class="fade-in">
-                <p class="section-title text-3xl md:text-5xl">
-                    AI가 일하고,<br>당신은 결과를 얻는다
-                </p>
-            </div>
+        <div class="case-quote">"AI가 우리 사업 맥락을 기억합니다. 매번 설명하지 않아도 됩니다."</div>
+      </div>
+      <div class="case reveal reveal-delay-1">
+        <div class="case-tag">Case 02</div>
+        <h3 class="case-company">STACK</h3>
+        <p class="case-industry">데이터센터 운영</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-val">45min <span style="font-size:16px;color:var(--gray-400);font-weight:400">→</span> 2min</div>
+            <div class="case-metric-label">이상 감지 소요 시간</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val"><span style="font-size:16px;color:var(--gray-400);font-weight:400">월</span> 150만</div>
+            <div class="case-metric-label">운영 비용 절감</div>
+          </div>
         </div>
-    </section>
+        <div class="case-quote">"무인 모니터링이 실제로 작동합니다. 야간 인력 비용이 사라졌습니다."</div>
+      </div>
+    </div>
+    <div class="cases-retention reveal">
+      <div class="cases-retention-num" data-count="0" data-suffix="%">0%</div>
+      <div class="cases-retention-label">8개월 고객 이탈률</div>
+    </div>
+  </div>
+</section>
 
-    <!-- Before/After Section -->
-    <section class="py-40 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-4xl md:text-6xl text-center mb-24 fade-in">
-                패러다임의 전환
-            </h2>
-            
-            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-                <!-- Before: SaaS -->
-                <div class="card p-10 md:p-14 rounded-3xl fade-in">
-                    <div class="text-xs font-bold text-gray-400 tracking-wider mb-6">BEFORE</div>
-                    <h3 class="text-4xl md:text-5xl font-black mb-8">SaaS</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">$99</div>
-                            <p class="body-text text-gray-600">월 구독료</p>
-                        </div>
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">3시간</div>
-                            <p class="body-text text-gray-600">학습 시간</p>
-                        </div>
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-gray-400 mb-2">∞</div>
-                            <p class="body-text text-gray-600">반복 작업</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- After: AIaaS -->
-                <div class="card p-10 md:p-14 rounded-3xl fade-in bg-black text-white border-black">
-                    <div class="text-xs font-bold text-gray-400 tracking-wider mb-6">AFTER</div>
-                    <h3 class="text-4xl md:text-5xl font-black mb-8">AIaaS</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-white mb-2">시간당</div>
-                            <p class="body-text text-gray-300">필요한 만큼만 결제</p>
-                        </div>
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-white mb-2">0분</div>
-                            <p class="body-text text-gray-300">말로 지시하면 끝</p>
-                        </div>
-                        <div>
-                            <div class="big-number text-5xl md:text-6xl text-white mb-2">24/7</div>
-                            <p class="body-text text-gray-300">자동으로 계속 작동</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- DIFFERENTIATOR -->
+<section class="diff" id="diff">
+  <div class="section-inner">
+    <div class="section-label reveal">Why Us</div>
+    <h2 class="section-title reveal">HW + SW 이중 전문성</h2>
+    <p class="section-desc reveal">소프트웨어만으로는 부족합니다. 하드웨어 인프라까지 직접 운영합니다.</p>
+    <div class="diff-grid">
+      <div class="diff-col reveal">
+        <div class="diff-col-label">Software</div>
+        <div class="diff-item">
+          <h4>오픈소스 <span class="highlight" data-count="427" data-suffix="만+">0</span> 월간 다운로드</h4>
+          <p>글로벌 개발자 커뮤니티에서 검증된 기술력</p>
         </div>
-    </section>
-
-    <!-- OpenClaw Features Section -->
-    <section class="py-40 px-6 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-4xl md:text-6xl text-center mb-32 fade-in">
-                OpenClaw
-            </h2>
-            
-            <div class="grid md:grid-cols-2 gap-12 md:gap-20">
-                <div class="fade-in">
-                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">01</div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4">자연어로 지시</h3>
-                    <p class="body-text text-gray-700 text-lg">
-                        말로 설명하면 AI가 이해하고 실행합니다.
-                    </p>
-                </div>
-                
-                <div class="fade-in">
-                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">02</div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4">80+ 스킬 생태계</h3>
-                    <p class="body-text text-gray-700 text-lg">
-                        이메일, 블로그, 인스타그램부터 음성합성까지.
-                    </p>
-                </div>
-                
-                <div class="fade-in">
-                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">03</div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Discord 통합</h3>
-                    <p class="body-text text-gray-700 text-lg">
-                        메시지만으로 작업 지시하고 결과를 받습니다.
-                    </p>
-                </div>
-                
-                <div class="fade-in">
-                    <div class="big-number text-6xl md:text-7xl mb-6 text-gray-300">04</div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4">24/7 자동화</h3>
-                    <p class="body-text text-gray-700 text-lg">
-                        AI가 계속 일합니다. 잠자는 동안에도.
-                    </p>
-                </div>
-            </div>
+        <div class="diff-item">
+          <h4>영속 메모리</h4>
+          <p>세션이 끊겨도 맥락을 기억합니다. 매번 처음부터 설명할 필요 없습니다.</p>
         </div>
-    </section>
-
-    <!-- Ecosystem Section -->
-    <section class="py-40 px-6">
-        <div class="max-w-5xl mx-auto text-center">
-            <div class="fade-in mb-20">
-                <div class="big-number text-7xl md:text-9xl mb-6 text-gray-800">80+</div>
-                <h2 class="section-title text-3xl md:text-5xl">
-                    스킬 생태계
-                </h2>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 fade-in">
-                <div class="card p-6 md:p-8 rounded-2xl">
-                    <p class="font-bold text-base md:text-lg mb-2">메시징</p>
-                    <p class="text-xs md:text-sm text-gray-600">Discord, Telegram</p>
-                </div>
-                <div class="card p-6 md:p-8 rounded-2xl">
-                    <p class="font-bold text-base md:text-lg mb-2">SNS</p>
-                    <p class="text-xs md:text-sm text-gray-600">Instagram, Twitter</p>
-                </div>
-                <div class="card p-6 md:p-8 rounded-2xl">
-                    <p class="font-bold text-base md:text-lg mb-2">미디어</p>
-                    <p class="text-xs md:text-sm text-gray-600">이미지, 음성, 카메라</p>
-                </div>
-                <div class="card p-6 md:p-8 rounded-2xl">
-                    <p class="font-bold text-base md:text-lg mb-2">개발</p>
-                    <p class="text-xs md:text-sm text-gray-600">Git, Shell, 파일</p>
-                </div>
-            </div>
+        <div class="diff-item">
+          <h4>자기학습</h4>
+          <p>사용할수록 업무 패턴을 학습하고 정확도가 올라갑니다.</p>
         </div>
-    </section>
-
-    <!-- Use Case: MUFI -->
-    <section class="py-40 px-6 bg-black text-white">
-        <div class="max-w-4xl mx-auto">
-            <div class="fade-in mb-20">
-                <div class="text-xs font-bold text-gray-500 tracking-wider mb-6">CASE STUDY</div>
-                <h2 class="section-title text-4xl md:text-6xl mb-12">
-                    MUFI 포토부스
-                </h2>
-                <p class="body-text text-gray-400 text-lg md:text-xl max-w-2xl">
-                    대학 축제 홍보, 매일 3시간 → 메시지 하나로 끝
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 md:gap-12 fade-in">
-                <div>
-                    <div class="big-number text-5xl md:text-6xl text-gray-600 mb-4">3시간</div>
-                    <p class="body-text text-gray-400">사람이 직접 할 때</p>
-                </div>
-                
-                <div>
-                    <div class="big-number text-5xl md:text-6xl text-white mb-4">→</div>
-                    <p class="body-text text-gray-400">OpenClaw 도입</p>
-                </div>
-                
-                <div>
-                    <div class="big-number text-5xl md:text-6xl text-white mb-4">5분</div>
-                    <p class="body-text text-gray-300 font-semibold">95% 시간 절감</p>
-                </div>
-            </div>
-            
-            <div class="mt-16 fade-in">
-                <p class="body-text text-gray-400 text-base md:text-lg">
-                    이미지 생성, 카드뉴스 제작, 인스타그램·블로그·트위터 업로드까지<br class="hidden md:block">
-                    Discord 메시지 하나로 모든 채널에 자동 배포
-                </p>
-            </div>
+      </div>
+      <div class="diff-col reveal reveal-delay-1">
+        <div class="diff-col-label">Hardware</div>
+        <div class="diff-item">
+          <h4>자체 서버랙 운영</h4>
+          <p>AWS 대비 <span class="highlight">80%</span> 비용 절감. 데이터가 외부로 나가지 않습니다.</p>
         </div>
-    </section>
-
-    <!-- CTA / 문의 Section -->
-    <section id="contact" class="py-40 px-6">
-        <div class="max-w-2xl mx-auto fade-in">
-            <h2 class="section-title text-4xl md:text-6xl mb-4 text-center">
-                무료 진단 신청
-            </h2>
-            <p class="text-gray-500 text-center mb-12">
-                AI 에이전트가 어떤 업무를 대신할 수 있는지, 무료로 분석해드립니다.
-            </p>
-            <form action="https://formsubmit.co/ajax/mupengi98@gmail.com" method="POST" class="space-y-6" id="contact-form">
-                <div>
-                    <label class="block text-sm font-semibold mb-2">이름 / 회사명</label>
-                    <input type="text" name="name" required placeholder="홍길동 / 홍길동컴퍼니" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base" />
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-2">연락처 (이메일 또는 전화번호)</label>
-                    <input type="text" name="contact" required placeholder="hello@company.com / 010-1234-5678" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base" />
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-2">업종</label>
-                    <select name="industry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base bg-white">
-                        <option value="">선택해주세요</option>
-                        <option value="ecommerce">이커머스 / 쇼핑몰</option>
-                        <option value="fnb">요식업 / 카페</option>
-                        <option value="beauty">뷰티 / 미용실</option>
-                        <option value="clinic">병원 / 클리닉</option>
-                        <option value="studio">스튜디오 / 포토부스</option>
-                        <option value="media">미디어 / 방송</option>
-                        <option value="startup">스타트업 / IT</option>
-                        <option value="other">기타</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-2">어떤 업무를 자동화하고 싶으신가요?</label>
-                    <textarea name="message" rows="4" placeholder="예: 고객 문의 응대가 너무 많아요 / 리뷰 관리를 자동화하고 싶어요 / 매출 리포트를 매일 받고 싶어요" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition text-base resize-none"></textarea>
-                </div>
-                <input type="text" name="_gotcha" style="display:none" />
-                <button type="submit" class="btn-primary w-full text-center block">
-                    무료 진단 신청하기 →
-                </button>
-                <p class="text-xs text-gray-400 text-center">24시간 내 무펭이가 직접 답변드립니다 🐧</p>
-            </form>
-            <div id="form-success" class="hidden text-center py-12">
-                <p class="text-2xl font-bold mb-2">🐧 신청 완료!</p>
-                <p class="text-gray-500">24시간 내 연락드리겠습니다.</p>
-            </div>
+        <div class="diff-item">
+          <h4>특허 3건 보유</h4>
+          <p>전자장비 설계 분야 16년 경력 기반의 독자 기술</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-16 px-6 border-t border-gray-200 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div>
-                    <p class="text-2xl font-black">무펭이즘</p>
-                    <p class="text-sm text-gray-500 mt-2">AI 노동력의 시대</p>
-                </div>
-                <div class="text-center md:text-right">
-                    <a href="https://github.com/mupeng-ai/openclaw" target="_blank" class="text-sm text-gray-600 hover:text-black transition">
-                        GitHub
-                    </a>
-                    <p class="text-xs text-gray-400 mt-2">© 2026 무펭이즘</p>
-                </div>
-            </div>
+        <div class="diff-item">
+          <h4>온프레미스 배포</h4>
+          <p>고객 사내 설치 가능. 민감 데이터를 외부에 맡기지 않습니다.</p>
         </div>
-    </footer>
+      </div>
+    </div>
+    <div class="compare reveal">
+      <h3>경쟁사 비교</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>구분</th><th>기존 서비스</th><th class="mup-col">무펭이즘</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ChatGPT</td>
+            <td>세션 초기화 — 매번 새로 시작</td>
+            <td class="mup-col">영속 기억 — 맥락 유지</td>
+          </tr>
+          <tr>
+            <td>MS Copilot</td>
+            <td>$75+ / user / month</td>
+            <td class="mup-col">월 70만원 올인원</td>
+          </tr>
+          <tr>
+            <td>뤼튼</td>
+            <td>개인용 도구</td>
+            <td class="mup-col">B2B 관리형 서비스</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
-    <!-- Intersection Observer Script -->
-    <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -80px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="section-label reveal">Pricing</div>
+    <h2 class="section-title reveal">효과 확인 후 결정하세요</h2>
+    <p class="section-desc reveal">도입 의무 없음. 파일럿 기간 동안 실제 업무에 적용해보세요.</p>
+    <div class="pricing-cards">
+      <div class="pricing-card reveal">
+        <div class="pricing-card-name">Pilot</div>
+        <div class="pricing-card-price">무료 <span>/ 1개월</span></div>
+        <p class="pricing-card-desc">셋업비, 구독료 없이 1개월간 실제 업무에 AI를 적용합니다.</p>
+        <ul class="pricing-card-features">
+          <li>업무 분석 및 자동화 설계</li>
+          <li>AI 에이전트 배치</li>
+          <li>실무자 교육</li>
+          <li>효과 측정 리포트</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-card-name">Standard</div>
+        <div class="pricing-card-price">70만원~ <span>/ 월</span></div>
+        <p class="pricing-card-desc">월간 관리 포함. 약정 없이 매월 갱신합니다.</p>
+        <ul class="pricing-card-features">
+          <li>파일럿 포함 전체 서비스</li>
+          <li>월간 성능 관리 및 최적화</li>
+          <li>장애 대응 및 업데이트</li>
+          <li>온프레미스 서버 운영 (선택)</li>
+          <li>약정 없음</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note reveal">"도입 의무 없음. 효과 확인 후 결정하세요."</p>
+  </div>
+</section>
 
-        // Form submission
-        const form = document.getElementById('contact-form');
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = form.querySelector('button[type="submit"]');
-                btn.textContent = '전송 중...';
-                btn.disabled = true;
-                try {
-                    await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                    form.classList.add('hidden');
-                    document.getElementById('form-success').classList.remove('hidden');
-                } catch {
-                    btn.textContent = '무료 진단 신청하기 →';
-                    btn.disabled = false;
-                    alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
-                }
-            });
-        }
-    </script>
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="section-inner">
+    <div class="section-label reveal">Team</div>
+    <h2 class="section-title reveal">만드는 사람들</h2>
+    <div class="team-grid">
+      <div class="team-member reveal">
+        <div class="team-member-role">CEO</div>
+        <div class="team-member-name">정종현</div>
+        <div class="team-member-detail">
+          <strong>MUFI 포토부스</strong> 창업, 연 매출 4.98억 달성.<br>
+          오픈소스 프로젝트 월 <strong>427만 다운로드</strong>.<br>
+          소프트웨어와 비즈니스를 잇는 빌더.
+        </div>
+      </div>
+      <div class="team-member reveal reveal-delay-1">
+        <div class="team-member-role">COO</div>
+        <div class="team-member-name">김동우</div>
+        <div class="team-member-detail">
+          <strong>당근마켓</strong> 3년 근무.<br>
+          고객 성공 중심의 운영으로<br>
+          <strong>이탈률 0%</strong> 달성.
+        </div>
+      </div>
+      <div class="team-member reveal reveal-delay-2">
+        <div class="team-member-role">Infrastructure</div>
+        <div class="team-member-name">박동국</div>
+        <div class="team-member-detail">
+          전자장비 설계 <strong>16년</strong> 경력.<br>
+          <strong>특허 2건</strong> 보유.<br>
+          자체 서버 인프라 설계 및 운영.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2 class="reveal">30분 무료 컨설팅으로<br>시작하세요</h2>
+  <p class="reveal">귀사의 반복 업무, AI로 얼마나 줄일 수 있는지 분석해드립니다.</p>
+  <a href="mailto:muinfilm@naver.com" class="btn-primary reveal">
+    무료 컨설팅 신청
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+  <div class="footer-contact reveal">
+    <a href="tel:문의 전화">문의 전화</a>
+    <a href="mailto:muinfilm@naver.com">muinfilm@naver.com</a>
+  </div>
+</section>
+<div class="footer-bottom">&copy; 2026 무펭이즘(Mupengism). All rights reserved.</div>
+
+<script>
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)});
+
+// Mobile nav
+const toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// Reveal on scroll
+const reveals=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})
+},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+reveals.forEach(el=>io.observe(el));
+
+// Count-up
+function countUp(el,target,suffix,decimals){
+  const dur=1800;const start=performance.now();
+  const step=(now)=>{
+    const t=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-t,3);
+    const val=(ease*target);
+    el.textContent=(decimals?val.toFixed(decimals):Math.floor(val))+(suffix||'');
+    if(t<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Observe count targets
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const target=parseFloat(el.dataset.count);
+        const suffix=el.dataset.suffix||'';
+        const decimals=String(target).includes('.')?1:0;
+        countUp(el,target,suffix,decimals);
+        obs.unobserve(el);
+      }
+    })
+  },{threshold:.5});
+  obs.observe(el);
+});
+</script>
 </body>
 </html>
