@@ -44,7 +44,7 @@ export default function AgentRoles() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-purple-400 font-mono text-sm mb-4 tracking-widest">
@@ -53,7 +53,7 @@ export default function AgentRoles() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             어떤 <span className="gradient-text">AI 직원</span>이 필요하세요?
           </h2>
-          <p className="text-zinc-500 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
             세 가지 역할 중 선택하세요. 커스터마이징도 가능합니다.
           </p>
         </motion.div>
@@ -65,7 +65,7 @@ export default function AgentRoles() {
               className={`glass rounded-2xl p-8 transition-all duration-300 border border-transparent ${role.borderColor} hover:transform hover:-translate-y-1`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
             >
               <div
@@ -78,15 +78,15 @@ export default function AgentRoles() {
               <h3 className="text-xl font-bold text-white mb-1">
                 {role.title}
               </h3>
-              <p className="text-xs font-mono text-zinc-500 mb-4">
+              <p className="text-xs font-mono text-zinc-400 mb-4">
                 {role.subtitle}
               </p>
-              <p className="text-zinc-400 leading-relaxed mb-6">
+              <p className="text-zinc-300 leading-relaxed mb-6">
                 {role.description}
               </p>
 
               <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-800">
-                <p className="text-sm text-zinc-500 mb-1">사용 예시</p>
+                <p className="text-sm text-zinc-400 mb-1">사용 예시</p>
                 <p className="text-sm text-cyan-400/80 italic">
                   {role.example}
                 </p>

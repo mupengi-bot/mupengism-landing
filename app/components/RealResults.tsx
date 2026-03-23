@@ -85,7 +85,7 @@ export default function RealResults() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest">
@@ -94,7 +94,7 @@ export default function RealResults() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             실제 고객 <span className="gradient-text">후기</span>
           </h2>
-          <p className="text-zinc-500 text-lg">
+          <p className="text-zinc-400 text-lg">
             무펭이즘 AI 직원과 함께하는 기업들
           </p>
         </motion.div>
@@ -106,7 +106,7 @@ export default function RealResults() {
               className="glass glass-hover rounded-2xl p-8 transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
               <div className="flex items-start justify-between mb-6">
@@ -122,7 +122,7 @@ export default function RealResults() {
               </div>
 
               <div className="mb-6">
-                <p className="text-xs text-zinc-500 mb-1">{customer.metric}</p>
+                <p className="text-xs text-zinc-400 mb-1">{customer.metric}</p>
                 <p className="text-3xl font-bold gradient-text">
                   <AnimatedNumber value={customer.value} suffix={customer.suffix} />
                 </p>

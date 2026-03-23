@@ -108,7 +108,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          className="mt-16 flex items-center justify-center gap-8 text-zinc-500 text-sm"
+          className="mt-16 flex items-center justify-center gap-8 text-zinc-400 text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}

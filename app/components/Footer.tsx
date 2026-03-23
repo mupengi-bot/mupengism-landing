@@ -11,7 +11,7 @@ export default function Footer() {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-zinc-500">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-zinc-400">
         <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
           <span className="font-bold text-zinc-300 text-base">무펭이즘</span>
           <span className="hidden md:inline">·</span>

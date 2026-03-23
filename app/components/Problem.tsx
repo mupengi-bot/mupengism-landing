@@ -32,7 +32,7 @@ export default function Problem() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-purple-400 font-mono text-sm mb-4 tracking-widest">
@@ -41,7 +41,7 @@ export default function Problem() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             왜 AI를 <span className="gradient-text">못 쓰고</span> 있나요?
           </h2>
-          <p className="text-zinc-500 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
             AI는 이미 충분히 똑똑합니다. 문제는 &lsquo;설치&rsquo;입니다.
           </p>
         </motion.div>
@@ -53,7 +53,7 @@ export default function Problem() {
               className="glass glass-hover rounded-2xl p-8 transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
             >
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 flex items-center justify-center mb-6">
@@ -62,7 +62,7 @@ export default function Problem() {
               <h3 className="text-xl font-semibold mb-3 text-white">
                 {problem.title}
               </h3>
-              <p className="text-zinc-400 leading-relaxed">
+              <p className="text-zinc-300 leading-relaxed">
                 {problem.description}
               </p>
             </motion.div>

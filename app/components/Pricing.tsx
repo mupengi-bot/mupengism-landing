@@ -25,7 +25,7 @@ export default function Pricing() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-purple-400 font-mono text-sm mb-4 tracking-widest">
@@ -34,7 +34,7 @@ export default function Pricing() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             심플한 <span className="gradient-text">요금제</span>
           </h2>
-          <p className="text-zinc-500 text-lg">
+          <p className="text-zinc-400 text-lg">
             복잡한 요금 체계 없이, 하나의 플랜으로 모든 것을 제공합니다
           </p>
         </motion.div>
@@ -43,7 +43,7 @@ export default function Pricing() {
           className="glass rounded-3xl p-10 md:p-14 border border-purple-500/10 hover:border-purple-500/20 transition-all duration-500 relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           {/* Background glow */}
@@ -53,13 +53,13 @@ export default function Pricing() {
           <div className="relative z-10">
             <div className="text-center mb-10">
               <div className="flex items-baseline justify-center gap-2 mb-2">
-                <span className="text-sm text-zinc-500">월</span>
+                <span className="text-sm text-zinc-400">월</span>
                 <span className="text-6xl md:text-7xl font-bold gradient-text">
                   70만원
                 </span>
-                <span className="text-sm text-zinc-500">부터</span>
+                <span className="text-sm text-zinc-400">부터</span>
               </div>
-              <p className="text-zinc-500">
+              <p className="text-zinc-400">
                 VAT 별도 · 에이전트 추가 시 별도 상담
               </p>
             </div>

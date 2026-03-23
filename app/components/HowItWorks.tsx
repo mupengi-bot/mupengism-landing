@@ -35,7 +35,7 @@ export default function HowItWorks() {
           className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest">
@@ -56,7 +56,7 @@ export default function HowItWorks() {
               className="relative text-center"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
             >
               {/* Step circle */}
@@ -72,7 +72,7 @@ export default function HowItWorks() {
               <h3 className="text-2xl font-bold mb-3 text-white">
                 {step.title}
               </h3>
-              <p className="text-zinc-400 leading-relaxed max-w-xs mx-auto">
+              <p className="text-zinc-300 leading-relaxed max-w-xs mx-auto">
                 {step.description}
               </p>
             </motion.div>
