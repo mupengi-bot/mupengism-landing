@@ -9,7 +9,9 @@ export default function CTA() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -23,13 +25,24 @@ export default function CTA() {
       return;
     }
 
-    // Store to localStorage
-    const existing = JSON.parse(localStorage.getItem("mupengism_leads") || "[]");
-    existing.push({ email, timestamp: new Date().toISOString() });
-    localStorage.setItem("mupengism_leads", JSON.stringify(existing));
-
-    setSubmitted(true);
-    setEmail("");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setEmail("");
+      } else {
+        setError("제출 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+    } catch {
+      setError("네트워크 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -102,7 +115,7 @@ export default function CTA() {
                 className="glow-button w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full text-white font-semibold hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
-                상담 신청
+                {loading ? "전송 중..." : "상담 신청"}
               </button>
             </form>
           )}
