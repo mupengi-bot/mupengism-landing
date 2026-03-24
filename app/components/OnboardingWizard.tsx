@@ -8,16 +8,24 @@ import {
   Building2,
   Mail,
   Briefcase,
+  Newspaper,
+  MessageCircle,
+  ClipboardList,
+  Hash,
+  Send,
+  Check,
+  CheckCircle2,
+  MessageSquare,
 } from "lucide-react";
 
 type Role = "news" | "support" | "assistant";
-type Channel = "discord" | "telegram" | "slack";
+type Channel = "discord" | "telegram" | "slack" | "kakaotalk" | "other";
 
 interface FormData {
   companyName: string;
   industry: string;
   email: string;
-  role: Role | null;
+  roles: Role[];
   channel: Channel | null;
   channelInfo: string;
 }
@@ -32,22 +40,27 @@ const industries = [
   "기타",
 ];
 
-const roles: { id: Role; emoji: string; title: string; desc: string }[] = [
+const roles: {
+  id: Role;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  desc: string;
+}[] = [
   {
     id: "news",
-    emoji: "📰",
+    icon: Newspaper,
     title: "뉴스 브리핑",
     desc: "업계 뉴스를 매일 정리해드립니다",
   },
   {
     id: "support",
-    emoji: "💬",
+    icon: MessageCircle,
     title: "고객 응대",
     desc: "고객 문의에 즉시 답변합니다",
   },
   {
     id: "assistant",
-    emoji: "📋",
+    icon: ClipboardList,
     title: "업무 보조",
     desc: "일정, 문서, 리서치를 도와드립니다",
   },
@@ -61,27 +74,47 @@ const roleNames: Record<Role, string> = {
 
 const channels: {
   id: Channel;
-  emoji: string;
+  icon: React.ComponentType<{ className?: string }> | null;
+  badge: string | null;
   title: string;
   placeholder: string;
+  disabled?: boolean;
 }[] = [
   {
     id: "discord",
-    emoji: "💬",
+    icon: Hash,
+    badge: null,
     title: "디스코드",
-    placeholder: "서버 초대링크 또는 서버명",
+    placeholder: "디스코드 사용자명 또는 서버명",
   },
   {
     id: "telegram",
-    emoji: "✈️",
+    icon: Send,
+    badge: null,
     title: "텔레그램",
-    placeholder: "텔레그램 ID (@username)",
+    placeholder: "@텔레그램 아이디",
   },
   {
     id: "slack",
-    emoji: "💼",
+    icon: null,
+    badge: "S",
     title: "슬랙",
-    placeholder: "워크스페이스 URL",
+    placeholder: "회사명 또는 워크스페이스명",
+  },
+  {
+    id: "kakaotalk",
+    icon: MessageSquare,
+    badge: null,
+    title: "카카오톡",
+    placeholder: "",
+    disabled: true,
+  },
+  {
+    id: "other",
+    icon: MessageCircle,
+    badge: null,
+    title: "기타",
+    placeholder: "사용하시는 메신저를 알려주세요",
   },
 ];
 
@@ -89,6 +122,8 @@ const channelNames: Record<Channel, string> = {
   discord: "디스코드",
   telegram: "텔레그램",
   slack: "슬랙",
+  kakaotalk: "카카오톡",
+  other: "기타",
 };
 
 const slideVariants = {
@@ -97,24 +132,22 @@ const slideVariants = {
   exit: { opacity: 0, x: -60 },
 };
 
-function DeployLog({
-  formData,
-}: {
-  formData: FormData;
-}) {
+function DeployLog({ formData }: { formData: FormData }) {
   const [lines, setLines] = useState<{ text: string; done: boolean }[]>([]);
   const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [apiSent, setApiSent] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const roleName = formData.role ? roleNames[formData.role] : "";
+  const roleNameList = formData.roles
+    .map((r) => roleNames[r])
+    .join(", ");
   const channelName = formData.channel ? channelNames[formData.channel] : "";
 
   const logSteps = [
     "에이전트 프로필 생성 중...",
     "SOUL.md 초기화 완료",
-    `${roleName} 스킬팩 설치 중...`,
+    `${roleNameList} 스킬팩 설치 중...`,
     "기억 시스템 구성 완료",
     `${channelName} 채널 연동 중...`,
     "보안 정책 적용 완료",
@@ -134,14 +167,14 @@ function DeployLog({
         email: formData.email,
         companyName: formData.companyName,
         industry: formData.industry,
-        role: formData.role ? roleNames[formData.role] : "",
+        role: roleNameList,
         channel: formData.channel ? channelNames[formData.channel] : "",
         channelInfo: formData.channelInfo,
       }),
     }).catch(() => {
       // silent — UX continues regardless
     });
-  }, [apiSent, formData]);
+  }, [apiSent, formData, roleNameList]);
 
   // Animate deploy log
   useEffect(() => {
@@ -188,7 +221,7 @@ function DeployLog({
         {/* Terminal body */}
         <div className="bg-[#111] p-5 font-mono text-sm space-y-2 min-h-[280px]">
           <p className="text-zinc-500 text-xs mb-3">
-            $ mupengism deploy --agent {formData.role} --channel{" "}
+            $ mupengism deploy --agent {formData.roles.join(",")} --channel{" "}
             {formData.channel}
           </p>
 
@@ -212,11 +245,13 @@ function DeployLog({
                     stiffness: 500,
                     damping: 15,
                   }}
-                  className={
-                    i === lines.length - 1 ? "text-yellow-400" : "text-green-400"
-                  }
+                  className="flex-shrink-0"
                 >
-                  {i === lines.length - 1 ? "🎉" : "✅"}
+                  {i === lines.length - 1 ? (
+                    <CheckCircle2 className="w-4 h-4 text-yellow-400" />
+                  ) : (
+                    <Check className="w-4 h-4 text-green-400" />
+                  )}
                 </motion.span>
               ) : (
                 <span className="text-zinc-600">○</span>
@@ -264,14 +299,14 @@ function DeployLog({
               boxShadow: "0 0 40px rgba(168, 85, 247, 0.15)",
             }}
           >
-            <motion.p
-              className="text-4xl mb-4"
+            <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
+              className="mb-4 flex justify-center"
             >
-              🐧
-            </motion.p>
+              <CheckCircle2 className="w-10 h-10 text-purple-400" />
+            </motion.div>
             <h3 className="text-xl font-bold text-white mb-3">
               <span className="gradient-text">{formData.companyName}</span>의 AI
               직원이 준비되었습니다!
@@ -299,7 +334,7 @@ export default function OnboardingWizard() {
     companyName: "",
     industry: "",
     email: "",
-    role: null,
+    roles: [],
     channel: null,
     channelInfo: "",
   });
@@ -334,15 +369,47 @@ export default function OnboardingWizard() {
     setStep(2);
   };
 
-  const handleRoleSelect = (role: Role) => {
-    updateField("role", role);
-    setTimeout(() => setStep(3), 300);
+  const toggleRole = (roleId: Role) => {
+    setFormData((prev) => {
+      const has = prev.roles.includes(roleId);
+      return {
+        ...prev,
+        roles: has
+          ? prev.roles.filter((r) => r !== roleId)
+          : [...prev.roles, roleId],
+      };
+    });
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.roles;
+      return next;
+    });
+  };
+
+  const handleStep2Submit = () => {
+    if (formData.roles.length === 0) {
+      setErrors({ roles: "최소 1개의 업무를 선택해주세요." });
+      return;
+    }
+    setStep(3);
+  };
+
+  const handleChannelSelect = (channelId: Channel) => {
+    const ch = channels.find((c) => c.id === channelId);
+    if (ch?.disabled) return;
+    updateField("channel", channelId);
+    updateField("channelInfo", "");
   };
 
   const handleStep3Submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.channel) {
       setErrors({ channel: "채널을 선택해주세요." });
+      return;
+    }
+    const selectedChannel = channels.find((c) => c.id === formData.channel);
+    if (selectedChannel?.disabled) {
+      setErrors({ channel: "준비 중인 채널입니다. 다른 채널을 선택해주세요." });
       return;
     }
     if (!formData.channelInfo.trim()) {
@@ -352,7 +419,7 @@ export default function OnboardingWizard() {
     setStep(4);
   };
 
-  const stepLabels = ["기본 정보", "AI 직원 선택", "연결 채널", "배포"];
+  const stepLabels = ["기본 정보", "업무 선택", "연결 채널", "배포"];
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -381,7 +448,7 @@ export default function OnboardingWizard() {
                         : "bg-white/5 text-zinc-600 border border-zinc-800"
                   }`}
                 >
-                  {isCompleted ? "✓" : num}
+                  {isCompleted ? <Check className="w-3.5 h-3.5" /> : num}
                 </div>
                 <span
                   className={`text-xs hidden sm:inline transition-colors duration-300 ${
@@ -506,7 +573,7 @@ export default function OnboardingWizard() {
           </motion.form>
         )}
 
-        {/* STEP 2: Choose Role */}
+        {/* STEP 2: Choose Roles (multi-select) */}
         {step === 2 && (
           <motion.div
             key="step2"
@@ -519,12 +586,11 @@ export default function OnboardingWizard() {
             <div className="glass rounded-2xl p-8">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <p className="text-white font-semibold">AI 직원 선택</p>
+                  <p className="text-white font-semibold">
+                    주요 업무를 선택해주세요
+                  </p>
                   <p className="text-zinc-400 text-sm">
-                    <span className="text-purple-400 font-medium">
-                      {formData.companyName}
-                    </span>
-                    에 어떤 AI 직원을 배치할까요?
+                    가장 중요한 업무를 선택하면, 나머지도 함께 처리합니다
                   </p>
                 </div>
                 <button
@@ -537,26 +603,61 @@ export default function OnboardingWizard() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {roles.map((role) => (
-                  <motion.button
-                    key={role.id}
-                    onClick={() => handleRoleSelect(role.id)}
-                    className={`relative rounded-2xl p-6 text-left transition-all duration-300 cursor-pointer border bg-white/[0.03] backdrop-blur-sm ${
-                      formData.role === role.id
-                        ? "border-purple-500/60 bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
-                        : "border-white/10 hover:border-purple-500/30 hover:bg-white/[0.06]"
-                    }`}
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <span className="text-3xl block mb-3">{role.emoji}</span>
-                    <p className="text-white font-semibold mb-1">
-                      {role.title}
-                    </p>
-                    <p className="text-zinc-400 text-sm">{role.desc}</p>
-                  </motion.button>
-                ))}
+                {roles.map((role) => {
+                  const isSelected = formData.roles.includes(role.id);
+                  const Icon = role.icon;
+                  return (
+                    <motion.button
+                      key={role.id}
+                      onClick={() => toggleRole(role.id)}
+                      className={`relative rounded-2xl p-6 text-left transition-all duration-300 cursor-pointer border bg-white/[0.03] backdrop-blur-sm ${
+                        isSelected
+                          ? "border-purple-500/60 bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                          : "border-white/10 hover:border-purple-500/30 hover:bg-white/[0.06]"
+                      }`}
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {/* Checkbox indicator */}
+                      <div
+                        className={`absolute top-3 right-3 w-5 h-5 rounded-md border flex items-center justify-center transition-all duration-200 ${
+                          isSelected
+                            ? "bg-purple-500 border-purple-500"
+                            : "border-zinc-600 bg-transparent"
+                        }`}
+                      >
+                        {isSelected && (
+                          <Check className="w-3.5 h-3.5 text-white" />
+                        )}
+                      </div>
+                      <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mb-3">
+                        <Icon className="w-5 h-5 text-purple-400" />
+                      </div>
+                      <p className="text-white font-semibold mb-1">
+                        {role.title}
+                      </p>
+                      <p className="text-zinc-400 text-sm">{role.desc}</p>
+                    </motion.button>
+                  );
+                })}
               </div>
+
+              {errors.roles && (
+                <p className="text-red-400 text-xs mt-4">{errors.roles}</p>
+              )}
+
+              <p className="text-zinc-500 text-xs mt-4 text-center">
+                선택한 업무 외에도 다양한 요청을 처리할 수 있습니다
+              </p>
+
+              <button
+                onClick={handleStep2Submit}
+                className="mt-6 w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl text-white font-semibold hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+                disabled={formData.roles.length === 0}
+              >
+                다음
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </motion.div>
         )}
@@ -577,7 +678,7 @@ export default function OnboardingWizard() {
                 <div>
                   <p className="text-white font-semibold">연결 채널</p>
                   <p className="text-zinc-400 text-sm">
-                    AI 직원이 활동할 채널을 선택해주세요
+                    어떤 채널에서 AI 직원과 대화하고 싶으세요?
                   </p>
                 </div>
                 <button
@@ -590,29 +691,44 @@ export default function OnboardingWizard() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                {channels.map((ch) => (
-                  <motion.button
-                    key={ch.id}
-                    type="button"
-                    onClick={() => {
-                      updateField("channel", ch.id);
-                      updateField("channelInfo", "");
-                    }}
-                    className={`relative rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer border bg-white/[0.03] backdrop-blur-sm ${
-                      formData.channel === ch.id
-                        ? "border-purple-500/60 bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
-                        : "border-white/10 hover:border-purple-500/30 hover:bg-white/[0.06]"
-                    }`}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <span className="text-2xl block mb-2">{ch.emoji}</span>
-                    <p className="text-white font-semibold text-sm">
-                      {ch.title}
-                    </p>
-                  </motion.button>
-                ))}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                {channels.map((ch) => {
+                  const isSelected = formData.channel === ch.id;
+                  return (
+                    <motion.button
+                      key={ch.id}
+                      type="button"
+                      onClick={() => handleChannelSelect(ch.id)}
+                      className={`relative rounded-2xl p-5 text-center transition-all duration-300 cursor-pointer border bg-white/[0.03] backdrop-blur-sm ${
+                        ch.disabled
+                          ? "opacity-40 cursor-not-allowed"
+                          : isSelected
+                            ? "border-purple-500/60 bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                            : "border-white/10 hover:border-purple-500/30 hover:bg-white/[0.06]"
+                      }`}
+                      whileHover={ch.disabled ? {} : { scale: 1.03 }}
+                      whileTap={ch.disabled ? {} : { scale: 0.98 }}
+                    >
+                      <div className="flex justify-center mb-2">
+                        {ch.icon ? (
+                          <ch.icon className="w-6 h-6 text-purple-400" />
+                        ) : ch.badge ? (
+                          <span className="w-6 h-6 rounded bg-purple-500/20 text-purple-400 font-bold text-sm flex items-center justify-center">
+                            {ch.badge}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="text-white font-semibold text-sm">
+                        {ch.title}
+                      </p>
+                      {ch.disabled && (
+                        <p className="text-zinc-500 text-[10px] mt-1">
+                          준비중
+                        </p>
+                      )}
+                    </motion.button>
+                  );
+                })}
               </div>
 
               {errors.channel && (
@@ -621,40 +737,56 @@ export default function OnboardingWizard() {
 
               {/* Channel info input */}
               <AnimatePresence>
-                {formData.channel && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mb-6"
+                {formData.channel &&
+                  !channels.find((c) => c.id === formData.channel)
+                    ?.disabled && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mb-6"
+                    >
+                      <label className="text-zinc-400 text-sm mb-1.5 block">
+                        {
+                          channels.find((c) => c.id === formData.channel)
+                            ?.title
+                        }{" "}
+                        연결 정보
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.channelInfo}
+                        onChange={(e) =>
+                          updateField("channelInfo", e.target.value)
+                        }
+                        placeholder={
+                          channels.find((c) => c.id === formData.channel)
+                            ?.placeholder
+                        }
+                        className="w-full px-4 py-3.5 bg-white/5 border border-zinc-800 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
+                        autoFocus
+                      />
+                      {errors.channelInfo && (
+                        <p className="text-red-400 text-xs mt-1.5">
+                          {errors.channelInfo}
+                        </p>
+                      )}
+                    </motion.div>
+                  )}
+              </AnimatePresence>
+
+              {/* Kakaotalk disabled message */}
+              <AnimatePresence>
+                {formData.channel === "kakaotalk" && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-zinc-500 text-sm mb-6 text-center"
                   >
-                    <label className="text-zinc-400 text-sm mb-1.5 block">
-                      {
-                        channels.find((c) => c.id === formData.channel)
-                          ?.title
-                      }{" "}
-                      연결 정보
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.channelInfo}
-                      onChange={(e) =>
-                        updateField("channelInfo", e.target.value)
-                      }
-                      placeholder={
-                        channels.find((c) => c.id === formData.channel)
-                          ?.placeholder
-                      }
-                      className="w-full px-4 py-3.5 bg-white/5 border border-zinc-800 rounded-xl text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all"
-                      autoFocus
-                    />
-                    {errors.channelInfo && (
-                      <p className="text-red-400 text-xs mt-1.5">
-                        {errors.channelInfo}
-                      </p>
-                    )}
-                  </motion.div>
+                    준비 중입니다. 다른 채널을 선택해주세요
+                  </motion.p>
                 )}
               </AnimatePresence>
 
@@ -662,7 +794,7 @@ export default function OnboardingWizard() {
                 type="submit"
                 className="w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl text-white font-semibold hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer"
               >
-                🚀 AI 직원 배포하기
+                AI 직원 배포하기
               </button>
             </div>
           </motion.form>
