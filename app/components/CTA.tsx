@@ -22,12 +22,12 @@ export default function CTA() {
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
             지금, <span className="gradient-text">AI 직원</span>을
             <br />
-            만나보세요
+            배포하세요
           </h2>
           <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-            30초 만에 나만의 AI 직원을 체험하세요.
+            3단계 설정만으로 AI 직원이 바로 업무를 시작합니다.
             <br />
-            실제로 대화해보고, 가능성을 확인하세요.
+            복잡한 세팅 없이, 채널만 연결하면 끝.
           </p>
         </motion.div>
 
