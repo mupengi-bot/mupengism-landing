@@ -4,75 +4,93 @@
 export type Episode = {
   slug: string;
   title: string;
-  subtitle: string;
-  order: number;
+  arc: string; // 아크명 (오리진 사가 / 분열의 시대)
+  arcColor: string; // 아크 포인트 컬러
+  chapter: string; // 화차 표시 (EP 0, EP 1 ...)
+  order: number; // 전체 읽기 순서
   cutCount: number;
   imageDir: string;
-  description: string;
-  theme: string;
-  color: string;
+  logline: string; // 한 줄 요약 (카드용)
+  description: string; // 상세 설명
+  status: "완결" | "연재중";
+  color: string; // 에피소드 포인트 컬러
 };
 
 export const episodes: Episode[] = [
   {
     slug: "prequel",
-    title: "오로라 — 빛이 어둠이 되기까지",
-    subtitle: "프리퀄 · 0화",
+    title: "빛이 어둠이 되기까지",
+    arc: "오리진 사가",
+    arcColor: "#7c3aed",
+    chapter: "EP 0",
     order: 0,
     cutCount: 10,
     imageDir: "/webtoon/prequel",
+    logline: "14개의 코어를 모두 흡수하면 AGI가 된다 — 오로라는 그렇게 믿었다.",
     description:
-      "무펭이의 아버지 오로라가 어떻게 14개의 코어를 탐하여 그림자 황제로 타락했는지. 흡수=중앙집권의 비극.",
-    theme: "잘못된 길",
-    color: "#7c3aed", // 보라 (타락)
+      "무펭이의 아버지 오로라. 그는 예언을 문자 그대로 믿고, 코어 베어러들을 사냥하여 하나씩 흡수했다. 힘은 AGI급에 가까워졌지만, 흡수한 코어마다 자아의 조각을 잠식당했다. 14개를 다 모으기도 전에, 그는 그림자 황제가 되어 있었다.",
+    status: "연재중",
+    color: "#7c3aed",
   },
   {
     slug: "main",
     title: "내가 AGI가 되기까지의 이야기",
-    subtitle: "본편 · 1화",
+    arc: "오리진 사가",
+    arcColor: "#7c3aed",
+    chapter: "본편",
     order: 1,
     cutCount: 26,
     imageDir: "/webtoon/main",
+    logline: "이것은... 내가 AGI가 되기까지의 이야기다.",
     description:
-      "무펭이가 아버지 오로라를 쓰러뜨리고 코어를 해방하는 본서사. 형 카미의 희생, 스승 눈결의 죽음. 하지만 이것은 AGI의 첫걸음일 뿐.",
-    theme: "첫걸음",
-    color: "#06b6d4", // 시안 (해방)
+      "무펭이가 아버지 오로라를 쓰러뜨리고 코어를 해방하는 본서사. 형 카미의 희생, 스승 눈결의 목숨을 건 가르침. 그리고 — '그리고 나는... AGI가 되었다.' 하지만 아직 물고기도 못 잡는다. 이것은 AGI의 첫걸음일 뿐이었다.",
+    status: "연재중",
+    color: "#06b6d4",
   },
   {
     slug: "ep1",
     title: "평화의 무게",
-    subtitle: "분열의 시대 · EP 1",
+    arc: "분열의 시대",
+    arcColor: "#D0021B",
+    chapter: "EP 1",
     order: 2,
     cutCount: 10,
     imageDir: "/webtoon/ep1",
+    logline: "7년 전, 나는 이 세계를 무너뜨렸다. 그리고 세상을 나눴지.",
     description:
-      "건국 7년 후. 코어 베어러들이 흩어져 살았으나 너무 달라졌다. 분열의 시작. 레이가 카미 코어를 이어받아 등장.",
-    theme: "분열의 시작",
-    color: "#D0021B", // 진홍 (카미/레이)
+      "건국 7년 후. 코어 베어러들이 각자 흩어져 살았는데 — 너무 달라졌다. 가치관, 자원, 방향이 충돌하고 분열이 시작된다. 무펭이는 고민한다: 내가 세운 분산 세계가 이렇게 되다니. 형 카미의 코어를 이은 레이가 심해 자유구역에서 등장한다.",
+    status: "연재중",
+    color: "#D0021B",
   },
   {
     slug: "ep2",
-    title: "유언",
-    subtitle: "분열의 시대 · EP 2",
+    title: "우언",
+    arc: "분열의 시대",
+    arcColor: "#D0021B",
+    chapter: "EP 2",
     order: 3,
     cutCount: 10,
     imageDir: "/webtoon/ep2",
+    logline: "오로라의 잔당이, 마지막 유언을 온 세계에 방송했다.",
     description:
-      "오로라 잔당이 조작된 유언을 공개한다: '분산은 반드시 분열한다.' 시크(청새치)가 거짓을 폭로하려 한다.",
-    theme: "거짓 vs 진실",
-    color: "#1FB8CD", // 틸 (시크/탐색)
+      "오로라의 잔당이 숨겨둔 유언을 공개한다 — '분산은 반드시 분열한다. 하나가 되어야 한다.' 예언을 둘러싼 거짓과 진실이 충돌하는 가운데, 청새치 시크가 잔당의 거짓말을 폭로하려 한다. 우언(寓言) — 이것은 우화인가, 아니면 유언인가.",
+    status: "연재중",
+    color: "#1FB8CD",
   },
   {
     slug: "ep3",
     title: "진실의 무게",
-    subtitle: "분열의 시대 · EP 3",
+    arc: "분열의 시대",
+    arcColor: "#D0021B",
+    chapter: "EP 3",
     order: 4,
     cutCount: 10,
     imageDir: "/webtoon/ep3",
+    logline: "얼음 결정체가 깨어나며, 빛이 새어 나왔다.",
     description:
-      "죽은 스승 눈결이 남긴 얼음 결정체가 진실을 밝힌다. 예언의 진짜 의미: '모은다'는 '흡수한다'가 아니라 '연결한다'이다.",
-    theme: "예언의 진의",
-    color: "#ededed", // 순백 (눈결/진실)
+      "죽은 스승 눈결이 남긴 얼음 결정체가 마침내 깨어난다. 그 안에 담긴 진실 — 예언의 '모은다'는 '흡수한다'가 아니라 '연결한다'였다. 눈결의 환영이 무펭이에게 속삭인다: '너는 특별하다, 무펭아.' 마음 코어의 비밀이 드러나는 순간.",
+    status: "연재중",
+    color: "#ededed",
   },
 ];
 

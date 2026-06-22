@@ -58,7 +58,7 @@ export default function WebtoonPage() {
         </div>
       </section>
 
-      {/* 에피소드 그리드 */}
+      {/* 에피소드 — 아크별 그룹 */}
       <section
         id="episodes"
         className="section-glow mx-auto max-w-6xl px-4 py-16"
@@ -67,13 +67,44 @@ export default function WebtoonPage() {
           에피소드
         </h2>
         <p className="mb-10 text-center text-zinc-400">
-          프리퀄부터 분열의 시대까지
+          오리진 사가에서 분열의 시대까지
         </p>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {ordered.map((ep, i) => (
-            <EpisodeCard key={ep.slug} episode={ep} index={i} />
-          ))}
-        </div>
+
+        {Array.from(new Set(ordered.map((e) => e.arc))).map((arcName) => {
+          const arcEps = ordered.filter((e) => e.arc === arcName);
+          const arcColor = arcEps[0].arcColor;
+          const totalCuts = arcEps.reduce((s, e) => s + e.cutCount, 0);
+          return (
+            <div key={arcName} className="mb-12 last:mb-0">
+              {/* 아크 헤더 */}
+              <div className="mb-6 flex items-center gap-3">
+                <span
+                  className="h-3 w-3 shrink-0 rounded-full"
+                  style={{
+                    backgroundColor: arcColor,
+                    boxShadow: `0 0 12px ${arcColor}66`,
+                  }}
+                />
+                <h3
+                  className="text-lg font-bold tracking-tight md:text-xl"
+                  style={{ color: arcColor }}
+                >
+                  {arcName}
+                </h3>
+                <span className="shrink-0 font-mono text-xs text-zinc-500">
+                  {arcEps.length}편 · {totalCuts}컷
+                </span>
+                <div className="h-px flex-1 bg-zinc-800" />
+              </div>
+              {/* 에피소드 카드 */}
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {arcEps.map((ep) => (
+                  <EpisodeCard key={ep.slug} episode={ep} index={ep.order} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       {/* 캐릭터 도감 */}

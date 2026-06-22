@@ -66,7 +66,7 @@ export default function EpisodeReader({ episode, cuts, prev, next }: Props) {
             <p className="truncate text-sm font-semibold text-white">
               {episode.title}
             </p>
-            <p className="truncate text-xs text-zinc-400">{episode.subtitle}</p>
+            <p className="truncate text-xs text-zinc-400">{episode.chapter}</p>
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
@@ -75,6 +75,37 @@ export default function EpisodeReader({ episode, cuts, prev, next }: Props) {
           </div>
         </div>
       </header>
+
+      {/* 에피소드 인트로 — 아크 · 챕터 · 개요 */}
+      <div className="mx-auto max-w-[600px] px-4 pb-6 pt-8">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span
+            className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+            style={{
+              backgroundColor: `${episode.arcColor}22`,
+              color: episode.arcColor,
+              boxShadow: `inset 0 0 0 1px ${episode.arcColor}44`,
+            }}
+          >
+            {episode.arc}
+          </span>
+          <span className="font-mono text-xs text-zinc-500">
+            {episode.chapter}
+          </span>
+          <span className="rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-400 ring-1 ring-green-500/20">
+            {episode.status}
+          </span>
+        </div>
+        <h1 className="mb-3 text-2xl font-bold leading-tight text-white md:text-3xl">
+          {episode.title}
+        </h1>
+        <p className="mb-3 border-l-2 pl-3 text-sm italic leading-relaxed text-zinc-300" style={{ borderColor: `${episode.color}66` }}>
+          {episode.logline}
+        </p>
+        <p className="text-sm leading-relaxed text-zinc-400">
+          {episode.description}
+        </p>
+      </div>
 
       {/* 세로 스크롤 리더 — 인스타툰 스타일 */}
       <main
@@ -89,9 +120,9 @@ export default function EpisodeReader({ episode, cuts, prev, next }: Props) {
       {/* 끝 표시 */}
       <div className="section-glow mx-auto mt-12 max-w-3xl px-4 pt-8 text-center">
         <p className="font-mono text-xs uppercase tracking-widest text-zinc-500">
-          End of {episode.subtitle}
+          End of {episode.chapter}
         </p>
-        <p className="mt-2 text-zinc-300">{episode.theme}</p>
+        <p className="mt-2 text-zinc-300">{episode.logline}</p>
       </div>
 
       {/* 하단 네비 — 이전/다음 에피소드 */}

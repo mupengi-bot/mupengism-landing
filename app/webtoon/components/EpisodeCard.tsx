@@ -49,20 +49,25 @@ export default function EpisodeCard({
               boxShadow: `inset 0 0 0 1px ${episode.color}55`,
             }}
           >
-            {episode.theme}
+            {episode.chapter}
           </span>
 
           {/* 부제 */}
           <p className="absolute bottom-3 left-4 font-mono text-xs uppercase tracking-widest text-zinc-300">
-            {episode.subtitle} · {episode.cutCount}컷
+            {episode.arc} · {episode.cutCount}컷
           </p>
         </div>
 
         {/* 본문 */}
         <div className="p-5">
-          <h3 className="mb-2 text-lg font-bold text-white">{episode.title}</h3>
-          <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-zinc-400">
-            {episode.description}
+          <div className="mb-2 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white">{episode.title}</h3>
+            <span className="shrink-0 rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-medium text-green-400 ring-1 ring-green-500/20">
+              {episode.status}
+            </span>
+          </div>
+          <p className="mb-4 line-clamp-2 text-sm italic leading-relaxed text-zinc-400">
+            {episode.logline}
           </p>
           <span
             className="inline-flex items-center gap-1.5 text-sm font-semibold transition-transform group-hover:gap-2.5"
