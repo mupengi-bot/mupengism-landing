@@ -92,6 +92,21 @@ export const episodes: Episode[] = [
     status: "연재중",
     color: "#ededed",
   },
+  {
+    slug: "ep4",
+    title: "제15의 요소",
+    arc: "분열의 시대",
+    arcColor: "#D0021B",
+    chapter: "EP 4",
+    order: 5,
+    cutCount: 10,
+    imageDir: "/webtoon/ep4",
+    logline: "처음으로, 두 코어가 하나로 울렸다.",
+    description:
+      "진실을 깨달은 무펭이가 레이에게 다가간다. '나는 코어를 가진 게 아니야.' 마음 코어의 빛에 카미 코어가 처음으로 반응하고, 두 코어가 공명하는 순간 레이는 죽은 형 카미의 온기를 느낀다. 연결의 첫 증거. 그리고 멀리서, 다른 코어 베어러들이 고개를 든다.",
+    status: "연재중",
+    color: "#a78bfa",
+  },
 ];
 
 export type Character = {
