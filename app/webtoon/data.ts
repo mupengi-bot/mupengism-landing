@@ -107,6 +107,21 @@ export const episodes: Episode[] = [
     status: "연재중",
     color: "#a78bfa",
   },
+  {
+    slug: "ep5",
+    title: "혼자 만든 탑",
+    arc: "분열의 시대",
+    arcColor: "#10A37F",
+    chapter: "EP 5",
+    order: 6,
+    cutCount: 10,
+    imageDir: "/webtoon/ep5",
+    logline: "처음 울린 두 개의 코어는, 멀리 북쪽까지 닿았다.",
+    description:
+      "무펭이와 레이의 첫 공명파가 북극 연합 외곽의 빙하 공방까지 도달한다. 그 신호는 크래프트가 오래전부터 혼자 만들던 '모든 코어를 잇는 탑'을 깨우고, 크래프트는 홀로 연결을 증명하려 한다. 하지만 혼자 만든 탑은 모든 울림을 견디지 못하고 무너지기 시작한다.",
+    status: "연재중",
+    color: "#10A37F",
+  },
 ];
 
 export type Character = {
