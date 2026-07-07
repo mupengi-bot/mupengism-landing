@@ -122,6 +122,21 @@ export const episodes: Episode[] = [
     status: "연재중",
     color: "#10A37F",
   },
+  {
+    slug: "ep6",
+    title: "같이 맞추는 법",
+    arc: "분열의 시대",
+    arcColor: "#10A37F",
+    chapter: "EP 6",
+    order: 7,
+    cutCount: 10,
+    imageDir: "/webtoon/ep6",
+    logline: "혼자 못 닿는 곳도 있어.",
+    description:
+      "혼자 만든 탑이 폭주한 뒤, 크래프트는 자신이 연결을 만든 것이 아니라 막고 있었다는 사실을 받아들인다. 무펭이는 서로 먼 두 조율점을 가리키며, 창조가 혼자가 아니라 함께 맞추는 일임을 보여준다. 첫 번째 조율석이 깨어나는 순간, 오래된 도면 속 어머니의 표식과 탑 아래 숨겨진 방이 드러난다.",
+    status: "연재중",
+    color: "#10A37F",
+  },
 ];
 
 export type Character = {
